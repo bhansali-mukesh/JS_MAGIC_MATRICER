@@ -58,13 +58,14 @@ function MATRICS_CALCULATOR(Arm)
 				{
 					var a7X7 = new Array
 					(
-						new Array(middle + 19, middle + 19,middle - 26, middle -18, middle + 20, middle - 27, middle + 3),
-						new Array(middle + 13, middle + 7, middle + 9, middle - 8, middle - 13, middle + 5, middle + 93),
-						new Array(middle + 9, middle - 10, middle + 3, middle - 4, middle + 1, middle + 10, middle + 91),
-						new Array(middle + 2, middle - 6, middle - 2, middle, middle + 2,middle + 6, middle + 6), 
-						new Array(middle + 76, middle +14 , middle - 1, middle + 4, middle - 3, middle -14, middle + 8),
-						new Array(middle + 39, middle - 5, middle - 9, middle + 8, middle + 13, middle - 7, middle + 0),
-						new Array(middle + 91, middle - 19, middle + 26, middle + 18, middle - 20, middle + 27, middle + 439)
+
+						new Array(middle+15, middle-26, middle-17, middle+16, middle-18, middle+19, middle+11),
+						new Array(middle-20, middle+7, middle+9, middle-8, middle-13, middle+5, middle+20),
+						new Array(middle-21, middle-10, middle+3, middle-4, middle+1, middle+10, middle+21),
+						new Array(middle-12, middle-6, middle-2, middle, middle + 2, middle+6, middle+12),
+						new Array(middle+24, middle+14, middle-1, middle+4, middle-3,	middle-14, middle-24),
+						new Array(middle+25, middle-5, middle-9, middle+8, middle+13, middle-7, middle-25),
+						new Array(middle-11, middle+26, middle+17, middle-16, middle+18, middle-19, middle-15)
 					);
 					
 					var dimension = parseInt((7 - Arm)/2);
@@ -83,6 +84,92 @@ function MATRICS_CALCULATOR(Arm)
 					}
 					
 					return Display_Matrix;
+				}
+		case 4:
+				{
+					var a4X4 = new Array
+					(
+						new Array(middle+12, middle-6, middle-14, middle+8),
+						new Array(middle-3, middle+2, middle-2, middle+3),
+						new Array(middle-4, middle-1, middle+1, middle+4),
+						new Array(middle-5, middle+5, middle+15, middle-15)
+					);
+					
+					for(var i = 0; i < 4; i++ )
+					{
+						Display_Matrix[i] = new Array();
+						for(var j = 0; j < 4; j++)
+						{
+							Display_Matrix[i][j] = a4X4[i][j];
+						}
+					}
+					
+					return Display_Matrix;
+				}
+		case 9:
+				{
+						var middles = new Array(
+							new Array(middle+3, middle-4, middle+1),
+							new Array(middle-2, middle, middle+2),
+							new Array(middle-1, middle+4, middle-3)
+						);
+						
+						var Logic_Array = new Array(
+							new Array(30, -40, 10),
+							new Array(-20, 0, 20),
+							new Array(-10, 40, -30)
+						);
+						
+						for(var i = 0; i < 3; i++)
+						{
+							Display_Matrix[i] = new Array();
+							for(var j = 0; j < 3; j++)
+							{
+								Display_Matrix[i][j] = new Array();
+								for(var k = 0; k < 3; k++)
+								{	
+									Display_Matrix[i][j][k] = new Array();
+									for(var l = 0; l < 3; l++)	
+									{
+										Display_Matrix[i][j][k][l] = middles[k][l] + Logic_Array[i][j];
+									}
+								}
+							}
+						}
+								
+						var Division = document.getElementById(Matrix_Space_Div);								// Division like Construction, Preview, Solution
+						if(Division != null)
+						{
+							var Table_String;
+							Table_String = '<table border="1" bordercolor=' + Table_Color[9] + '>';
+							for(var i = 0; i < 3; i++)
+							{
+								Table_String += "<tr>";
+								for(var j = 0; j < 3; j++)
+								{
+									Table_String += "<td>";
+									var Inner_Table = '<table border="1" bordercolor=' + Table_Color[i*j] + '>';
+									for(var k = 0; k < 3; k++)
+									{	
+										Inner_Table += '<tr>'; 
+										for(var l = 0; l < 3; l++)	
+										{
+											Inner_Table += "<td>" + Display_Matrix[i][j][k][l] + "</td>";
+										}
+										Inner_Table +="</tr>";
+									}
+									Inner_Table +="</table>";
+									
+									Table_String += Inner_Table;
+									Table_String += "</td>";
+								}
+								Table_String += "</tr>";
+							}
+							Table_String +="</table>";
+							
+							Division.innerHTML = Table_String;
+						}
+						
 				}
 		case 0:
 				return "-1";
